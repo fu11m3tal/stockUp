@@ -4,7 +4,7 @@
   "description": "Miles Frontend Challenge",
   "main": "index.js",
   "scripts": {
-    "react-dev": "webpack -d --watch",
+    "build": "webpack -d --watch",
     "start": "nodemon server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
