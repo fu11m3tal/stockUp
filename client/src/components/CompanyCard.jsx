@@ -15,16 +15,22 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Axios from 'axios';
 
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    maxWidth: 200,
+    borderRadius: 15,
+    margin: 100,
+    backgroundColor: "orange"
   },
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
+    backgroundSize: "100px",
+    margin: 25
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -42,11 +48,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CompanyCard({companies}) {
+export default function CompanyCard({company}) {
   const classes = useStyles();
+  console.log(company)
   const [expanded, setExpanded] = React.useState(false);
-  var { country, currency, exchange, finnhubIndustry, ipo, logo, marketCapitalization, name, phone, shareOutstanding, ticker, weburl } = companies.apple;
-
+  var { country, currency, exchange, finnhubIndustry, ipo, logo, marketCapitalization, name, phone, shareOutstanding, ticker, weburl } = company;
   const card_profile_data = {
     title: name,
     date: "September 14, 2016",
@@ -54,38 +60,41 @@ export default function CompanyCard({companies}) {
     text: finnhubIndustry,
     dropdown: {text: weburl}
   }
-  const handleExpandClick = () => {
+  const handle_expand_click = () => {
     setExpanded(!expanded);
   };
 
+  const handle_favorite_click = () => {
+    axios.post('/api/user/favorite', company_symbol)
+  }
+
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            {ticker}
-          </Avatar>
-        }
+    <Card id={ticker} className={classes.root}>
+      {/* <CardHeader
+        // avatar={
+        //   <Avatar aria-label="recipe" className={classes.avatar}>
+        //     {ticker}
+        //   </Avatar>
+        // }
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
-        title={card_profile_data.title}
-        subheader={card_profile_data.date}
-      />
-      {/* <CardMedia
+        title={card_profile_data.title || "title"}
+      /> */}
+      <CardMedia
         className={classes.media}
         image={card_profile_data.img.url}
         title={card_profile_data.img.title}
-      /> */}
+      />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {card_profile_data.text}
+          {`${card_profile_data.title} - ${card_profile_data.text}` || "text"}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton aria-label="add to favorites" onClick={() => {console.log(ticker)}}>
           <FavoriteIcon />
         </IconButton>
         <IconButton aria-label="share">
@@ -95,7 +104,7 @@ export default function CompanyCard({companies}) {
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
           })}
-          onClick={handleExpandClick}
+          onClick={handle_expand_click}
           aria-expanded={expanded}
           aria-label="show more"
         >
@@ -105,7 +114,7 @@ export default function CompanyCard({companies}) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>
-            {card_profile_data.dropdown.text}
+            {card_profile_data.dropdown.text || "dropdown text"}
           </Typography>
         </CardContent>
       </Collapse>
