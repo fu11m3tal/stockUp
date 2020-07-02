@@ -16,6 +16,7 @@ class App extends React.Component {
     this.getNews = this.getNews.bind(this);
     this.getPriceTarget = this.getPriceTarget.bind(this);
   }
+
   getFavorites() {
     
   }
@@ -45,8 +46,10 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    this.getNews();
-    this.getPriceTarget();
+    axios.get('/favorites')
+      .then(response => {
+        console.log("Response: ", response.data)
+      })
   }
 
   render() { 
@@ -54,7 +57,8 @@ class App extends React.Component {
     return (
       <div>
         <h1>{this.state.title}</h1>
-        <Search />
+        <button onClick={() => {console.log(this.state)}}></button>
+        <Search add_company_to_favorites={this.add_company_to_favorites}/>
         {/* <Line data={priceTarget} />
         {news.map((news, index) => (
           <NewsCard key={index} news={news} />

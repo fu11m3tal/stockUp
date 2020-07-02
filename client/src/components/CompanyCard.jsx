@@ -23,8 +23,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 200,
     borderRadius: 15,
-    margin: 100,
-    backgroundColor: "orange"
+    margin: 100
   },
   media: {
     height: 0,
@@ -48,9 +47,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CompanyCard({company}) {
+export default function CompanyCard({company, add_company_to_favorites}) {
   const classes = useStyles();
-  console.log(company)
   const [expanded, setExpanded] = React.useState(false);
   var { country, currency, exchange, finnhubIndustry, ipo, logo, marketCapitalization, name, phone, shareOutstanding, ticker, weburl } = company;
   const card_profile_data = {
@@ -64,12 +62,12 @@ export default function CompanyCard({company}) {
     setExpanded(!expanded);
   };
 
-  const handle_favorite_click = () => {
-    axios.post('/api/user/favorite', company_symbol)
+  const handle_favorite_click = (e) => {
+    console.log(e.target.id)
   }
 
   return (
-    <Card id={ticker} className={classes.root}>
+    <Card className={classes.root}>
       {/* <CardHeader
         // avatar={
         //   <Avatar aria-label="recipe" className={classes.avatar}>
@@ -94,7 +92,7 @@ export default function CompanyCard({company}) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" onClick={() => {console.log(ticker)}}>
+        <IconButton id={ticker} aria-label="add to favorites" onClick={handle_favorite_click}>
           <FavoriteIcon />
         </IconButton>
         <IconButton aria-label="share">
@@ -121,3 +119,5 @@ export default function CompanyCard({company}) {
     </Card>
   );
 }
+
+

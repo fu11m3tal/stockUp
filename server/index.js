@@ -2,26 +2,34 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
+const TOKEN = "brt2jjnrh5rd6rsr6mag"
+const axios = require('axios');
+const db = require('../database/queries');
 
-const finnhub = require('finnhub');
-const api_key = finnhub.ApiClient.instance.authentications['api_key'];
-api_key.apiKey = "brt2jjnrh5rd6rsr6mag" // Replace this
-const finnhubClient = new finnhub.DefaultApi()
-finnhubClient.companyProfile2({}, (error, data, response) => {
-  console.log(data)
-});
+// const finnhub = require('finnhub');
+// const api_key = finnhub.ApiClient.instance.authentications['api_key'];
+// api_key.apiKey = "brt2jjnrh5rd6rsr6mag" // Replace this
+// const finnhubClient = new finnhub.DefaultApi()
+// finnhubClient.companyProfile2({}, (error, data, response) => {
+//   console.log(data)
+// });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/../client/dist'));
 
+app.get('/favorites', db.get_favorites)
 
-app.get('/', () => {
-
+app.get('/api/search/company/:symbol', (req, res) => {
+  const {symbol}  = req.params;
+  axios.get(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}&token=${TOKEN}`)
+      .then(response => {
+        res.send(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      })   
 });
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
 
-app.get('/api', ((req, res) => {
-  res.send("Goodbye");
-}))
