@@ -51,8 +51,6 @@ class Search extends React.Component {
   }
 
   render() { 
-    var { profiles, results } = this.state;
-    var {add_company_to_favorites} = this.props;
     return (
       <div>
         <input id="search_input" value={this.state.search_input} onChange={this.handle_search_input_change}></input>

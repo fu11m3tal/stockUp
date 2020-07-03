@@ -32,7 +32,7 @@ app.get('/api/search/company/:symbol', (req, res) => {
 });
 
 app.get('/api/favorites', controllers.get_favorites)
-
+app.get('/api/news', controllers.get_news)
 app.post('/api/favorites', controllers.add_to_favorites)
 
 

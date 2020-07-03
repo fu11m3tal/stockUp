@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import Line from './Line.jsx';
 import Search from './Search.jsx';
 import NewsCard from './NewsCard.jsx';
 import TOKEN from '../../../certification/config.js';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -33,11 +33,9 @@ class App extends React.Component {
     var date = new Date();
     const month = String(date.getMonth() + 1);
     const day = String(date.getDate());
-    console.log(5)
-    axios.get(`https://finnhub.io/api/v1/company-news?symbol=AAPL&from=2020-${0+month}-${0+day}&to=2020-${0+month}-${0+day}&token=brt2jjnrh5rd6rsr6mag`)
+    axios.get('/api/news')
       .then(response => {
         const news = response.data;
-        news.sort((a, b) => (b.datetime - a.datetime))
         this.setState({news});
       })
       .catch(err => {
@@ -46,8 +44,7 @@ class App extends React.Component {
   }
 
   get_price_target() {
-
-    axios.get('https://finnhub.io/api/v1/stock/earnings?symbol=AAPL&token=brt2jjnrh5rd6rsr6mag')
+    axios.get(`https://finnhub.io/api/v1/stock/earnings?symbol=AAPL&token=${TOKEN}`)
       .then(response => {
         const price_target = response.data;
         this.setState({price_target})
@@ -60,14 +57,10 @@ class App extends React.Component {
 
   componentDidMount() {
     this.get_news();
-    axios.get('/favorites')
-      .then(response => {
-        console.log("Response: ", response.data)
-      })
   }
 
   render() { 
-    var { news, price_target } = this.state;
+    var { news } = this.state;
     return (
       <div>
         <h1>{this.state.title}</h1>
