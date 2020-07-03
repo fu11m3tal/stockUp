@@ -13,12 +13,21 @@ class App extends React.Component {
       news: [],
       priceTarget: {},
     }
+    this.getFavorites = this.getFavorites.bind(this);
+    this.add_to_favorites = this.add_to_favorites.bind(this);
     this.getNews = this.getNews.bind(this);
     this.getPriceTarget = this.getPriceTarget.bind(this);
   }
 
+  add_to_favorites() {
+    axios.post('api/favorites', {symbol: "APPL"})
+  }
+
   getFavorites() {
-    
+    axios.get('/api/favorites')
+      .then(response => {
+        console.log(response)
+      })
   }
 
   getNews() {
@@ -46,6 +55,7 @@ class App extends React.Component {
 
 
   componentDidMount() {
+    this.getFavorites()
     axios.get('/favorites')
       .then(response => {
         console.log("Response: ", response.data)
