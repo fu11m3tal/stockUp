@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-// import { runInThisContext } from 'vm';
 import Line from './Line.jsx';
 import Search from './Search.jsx';
 import NewsCard from './NewsCard.jsx';
@@ -11,29 +10,34 @@ class App extends React.Component {
     this.state = {
       favorites: [],
       news: [],
-      priceTarget: {},
+      price_target: {},
     }
-    this.getFavorites = this.getFavorites.bind(this);
+    this.get_favorites = this.get_favorites.bind(this);
     this.add_to_favorites = this.add_to_favorites.bind(this);
-    this.getNews = this.getNews.bind(this);
-    this.getPriceTarget = this.getPriceTarget.bind(this);
+    this.get_news = this.get_news.bind(this);
+    this.get_price_target = this.get_price_target.bind(this);
   }
 
   add_to_favorites() {
     axios.post('api/favorites', {symbol: "APPL"})
   }
 
-  getFavorites() {
+  get_favorites() {
     axios.get('/api/favorites')
       .then(response => {
         console.log(response)
       })
   }
 
-  getNews() {
-    axios.get('https://finnhub.io/api/v1/company-news?symbol=AAPL&from=2020-04-30&to=2020-05-01&token=brt2jjnrh5rd6rsr6mag')
+  get_news() {
+    var date = new Date();
+    const month = String(date.getMonth() + 1);
+    const day = String(date.getDate());
+    console.log(5)
+    axios.get(`https://finnhub.io/api/v1/company-news?symbol=AAPL&from=2020-${0+month}-${0+day}&to=2020-${0+month}-${0+day}&token=brt2jjnrh5rd6rsr6mag`)
       .then(response => {
         const news = response.data;
+        news.sort((a, b) => (b.datetime - a.datetime))
         this.setState({news});
       })
       .catch(err => {
@@ -41,12 +45,12 @@ class App extends React.Component {
       })
   }
 
-  getPriceTarget() {
+  get_price_target() {
 
     axios.get('https://finnhub.io/api/v1/stock/earnings?symbol=AAPL&token=brt2jjnrh5rd6rsr6mag')
       .then(response => {
-        const priceTarget = response.data;
-        this.setState({priceTarget})
+        const price_target = response.data;
+        this.setState({price_target})
       })
       .catch(err => {
         console.log(err);
@@ -55,7 +59,7 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    this.getFavorites()
+    this.get_news();
     axios.get('/favorites')
       .then(response => {
         console.log("Response: ", response.data)
@@ -63,16 +67,13 @@ class App extends React.Component {
   }
 
   render() { 
-    var { news, priceTarget } = this.state;
+    var { news, price_target } = this.state;
     return (
       <div>
         <h1>{this.state.title}</h1>
-        <button onClick={() => {console.log(this.state)}}></button>
-        <Search add_company_to_favorites={this.add_company_to_favorites}/>
-        {/* <Line data={priceTarget} />
         {news.map((news, index) => (
           <NewsCard key={index} news={news} />
-        ))} */}
+        ))}
       </div>
     )
   }

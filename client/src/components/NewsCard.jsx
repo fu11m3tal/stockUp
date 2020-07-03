@@ -51,9 +51,11 @@ export default function NewsCard({news}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   var { category, datetime, headline, id, image, related, source, summary, url } = news;
+  const date = new Date(datetime * 1000);
+  // console.log(date)
   const card_data = {
     title: headline,
-    date: datetime,
+    date: String(date),
     img: {url: image, title: name},
     text: "",
     dropdown: {text: summary}
