@@ -53,8 +53,10 @@ class Search extends React.Component {
   render() { 
     return (
       <div>
-        <input id="search_input" value={this.state.search_input} onChange={this.handle_search_input_change}></input>
-        <button id="search_button" onClick={this.handle_search_button_click}>Search</button>
+        <form>
+          <input id="search_input" value={this.state.search_input} onChange={this.handle_search_input_change}></input>
+          <button id="search_button" onClick={this.handle_search_button_click}>Search</button>
+        </form>
       </div>
     )
   }
