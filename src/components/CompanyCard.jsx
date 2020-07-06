@@ -21,7 +21,7 @@ import Axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 200,
+    maxWidth: 400,
     borderRadius: 15,
     margin: 100
   },
@@ -112,7 +112,31 @@ export default function CompanyCard({company, add_company_to_favorites}) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>
-            {card_profile_data.dropdown.text || "dropdown text"}
+            {`Company: ${name}` || "dropdown text"}
+          </Typography>
+          <Typography paragraph>
+            {`Ticker: ${ticker}` || "dropdown text"}
+          </Typography>
+          <Typography paragraph>
+            {`Country: ${country}` || "dropdown text"}
+          </Typography>
+          <Typography paragraph>
+            {`Currency: ${currency}` || "dropdown text"}
+          </Typography>
+          <Typography paragraph>
+            {`Exchange: ${exchange}` || "dropdown text"}
+          </Typography>
+          <Typography paragraph>
+            {`IPO: ${ipo}` || "dropdown text"}
+          </Typography>
+          <Typography paragraph>
+            {`Market Capitalization: ${marketCapitalization}` || "dropdown text"}
+          </Typography>
+          <Typography paragraph>
+            {`Share Outstanding: ${shareOutstanding}` || "dropdown text"}
+          </Typography>
+          <Typography paragraph>
+            {`Website: ${weburl}` || "dropdown text"}
           </Typography>
         </CardContent>
       </Collapse>

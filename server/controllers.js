@@ -8,7 +8,7 @@ exports.companyNews = (req, res) => {
   //Company News
   finnhubClient.companyNews("AAPL", "2020-01-01", "2020-05-01", (error, data, response) => {
       if (error) {
-          console.error(error);
+          res.send(error);
       } else {
           res.send(data)
       }
@@ -18,6 +18,18 @@ exports.companyNews = (req, res) => {
 exports.companyProfile = (req, res) => {
   var {symbol} = req.params;
   finnhubClient.companyProfile({'isin': symbol}, (error, data, response) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.send(data)
+    }
+  });
+}
+
+exports.priceTarget = (req, res) => {
+  // Price target
+  var {symbol} = req.params;
+  finnhubClient.priceTarget(symbol, (error, data, response) => {
     if (error) {
       res.send(error);
     } else {
@@ -51,10 +63,7 @@ exports.investorsOwnership = (req, res) => {
       //console.log(data)
   });
 }
- 
-exports.investorsOwnership = (req, res) => {
-  
-}
+
 // Basic financials
 finnhubClient.companyBasicFinancials("AAPL", "margin", (error, data, response) => {
     //console.log(data)

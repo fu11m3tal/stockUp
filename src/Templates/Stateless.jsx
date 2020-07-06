@@ -1,12 +1,11 @@
 import React from 'react';
-import { Z_FIXED } from 'zlib';
 
-const Rewards = ({  }) => {
+const Stateless = ({  }) => {
   return (
     <div>
-      <h1>Default</h1>
+      <h1>Stateless</h1>
     </div>
   )
 }
 
-export default Rewards; 
+export default Stateless; 
