@@ -6,19 +6,11 @@ const TOKEN = "brt2jjnrh5rd6rsr6mag"
 const axios = require('axios');
 const db = require('../database/index');
 const controllers = require('../database/controllers.js')
+const stock = require('./controllers.js')
 
-// const finnhub = require('finnhub');
-// const api_key = finnhub.ApiClient.instance.authentications['api_key'];
-// api_key.apiKey = "brt2jjnrh5rd6rsr6mag" // Replace this
-// const finnhubClient = new finnhub.DefaultApi()
-// finnhubClient.companyProfile2({}, (error, data, response) => {
-//   console.log(data)
-// });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/../public'));
-
-// app.get('/favorites', db.get_favorites)
 
 app.get('/api/search/company/:symbol', (req, res) => {
   const {symbol}  = req.params;
@@ -32,8 +24,12 @@ app.get('/api/search/company/:symbol', (req, res) => {
 });
 
 app.get('/api/favorites', controllers.get_favorites)
-app.get('/api/news', controllers.get_news)
 app.post('/api/favorites', controllers.add_to_favorites)
+
+
+//API Controllers to finnhub
+app.get('/api/stock/news', stock.companyNews)
+app.get('/api/stock/company/profile', stock.companyProfile)
 
 
 app.listen(PORT, () => {

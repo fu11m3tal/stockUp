@@ -53,10 +53,11 @@ class Search extends React.Component {
   render() { 
     return (
       <div>
-        <form>
-          <input id="search_input" value={this.state.search_input} onChange={this.handle_search_input_change}></input>
-          <button id="search_button" onClick={this.handle_search_button_click}>Search</button>
-        </form>
+        <input id="search_input" value={this.state.search_input} onChange={this.handle_search_input_change}></input>
+        <button id="search_button" onClick={this.handle_search_button_click}>Search</button>
+        {Object.values(this.state.results).map(company => (
+          <CompanyCard company={company} />
+        ))}
       </div>
     )
   }

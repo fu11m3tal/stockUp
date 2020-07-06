@@ -34,9 +34,10 @@ class App extends React.Component {
     var date = new Date();
     const month = String(date.getMonth() + 1);
     const day = String(date.getDate());
-    axios.get('/api/news')
+    axios.get('/api/stock/news')
       .then(response => {
         const news = response.data;
+        console.log(news)
         this.setState({news});
       })
       .catch(err => {
@@ -65,9 +66,11 @@ class App extends React.Component {
     return (
       <div>
         <h1>{this.state.title}</h1>
-        {news.map((news, index) => (
+        <button onClick={() => {console.log(this.state)}}>State</button>
+        <Search />
+        {/* {news.map((news, index) => (
           <NewsCard key={index} news={news} />
-        ))}
+        ))} */}
       </div>
     )
   }

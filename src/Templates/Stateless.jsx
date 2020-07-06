@@ -1,4 +1,5 @@
 import React from 'react';
+import { Z_FIXED } from 'zlib';
 
 const Rewards = ({  }) => {
   return (
