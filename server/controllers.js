@@ -4,6 +4,9 @@ const api_key = finnhub.ApiClient.instance.authentications['api_key'];
 api_key.apiKey = "brt2jjnrh5rd6rsr6mag" // Replace this
 const finnhubClient = new finnhub.DefaultApi()
 
+var WebSocket = require('websocket');
+
+
 exports.companyNews = (req, res) => {
   //Company News
   finnhubClient.companyNews("AAPL", "2020-01-01", "2020-05-01", (error, data, response) => {
@@ -28,13 +31,23 @@ exports.companyProfile = (req, res) => {
 
 exports.priceTarget = (req, res) => {
   // Price target
-  var {symbol} = req.params;
-  finnhubClient.priceTarget(symbol, (error, data, response) => {
-    if (error) {
-      res.send(error);
-    } else {
-      res.send(data)
-    }
+  // var {symbol} = req.params;
+  // res.send("hello")
+  const socket = new WebSocket('wss://ws.finnhub.io?token=brt2jjnrh5rd6rsr6mag');
+  // Connection opened -> Subscribe
+//   socket.on('connect', function() {
+//     console.log('socket connected!')
+//   })
+  socket.addEventListener('open', function (event) {
+      socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'APPL'}))
+      // socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'BINANCE:BTCUSDT'}))
+      // socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'IC MARKETS:1'}))
+  });
+
+  // // Listen for messages
+  socket.addEventListener('message', function (event) {
+      console.log('Message from server ', event.data);
+      res.send("hello")
   });
 }
 
@@ -289,12 +302,12 @@ finnhubClient.technicalIndicator("AAPL", "D", 1580988249, 1591852249, "macd", {}
  
 // Transcripts
 finnhubClient.transcripts("AAPL", (error, data, response) => {
-    console.log(data)
+    // console.log(data)
 });
  
 // Transcripts list
 finnhubClient.transcriptsList("AAPL", (error, data, response) => {
-    console.log(data)
+    // console.log(data)
 });
  
 // Upgrade/downgrade

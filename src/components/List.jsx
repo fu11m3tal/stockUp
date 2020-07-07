@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -21,10 +21,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function List({companies}) {
-  const classes = useStyles();
 
+export default function List({list, companies}) {
+  console.log(companies)
+  var company = companies[0]
+  const classes = useStyles();
   return (
+
     <ThemeProvider theme={darkTheme}>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
@@ -35,10 +38,10 @@ export default function List({companies}) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {companies.map((company) => (
-              <TableRow key={company.name}>
+            {list.map((company) => (
+              <TableRow key={company.symbol}>
                 <TableCell component="th" scope="row">
-                  {company.name}
+                  {company.symbol}
                 </TableCell>
                 <TableCell align="right">{company.price}</TableCell>
               </TableRow>

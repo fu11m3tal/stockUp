@@ -30,7 +30,7 @@ app.post('/api/favorites', controllers.add_to_favorites)
 //API Controllers to finnhub
 app.get('/api/stock/news', stock.companyNews)
 app.get('/api/stock/company/profile', stock.companyProfile)
-app.get('/api/stock/company/:symbol/price', stock.priceTarget)
+app.get('/api/stock/company/price', stock.priceTarget)
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
