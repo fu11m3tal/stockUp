@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import Search from './Search.jsx';
 import NewsCard from './NewsCard.jsx';
-import TOKEN from '../../certification/config';
 import List from './List.jsx';
 
 class App extends React.Component {

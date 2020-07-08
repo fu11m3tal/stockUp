@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import TOKEN from '../../certification/config';
 import CompanyCard from './CompanyCard.jsx';
 
 class Search extends React.Component {
