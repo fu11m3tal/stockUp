@@ -10,12 +10,13 @@
   },
   "author": "Steven",
   "license": "ISC",
-  "dependencies": {   
+  "dependencies": {
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
     "apexcharts": "^3.19.3",
     "axios": "^0.18.1",
     "finnhub": "^1.1.7",
+    "material-ui-popup-state": "^1.6.1",
     "mysql": "^2.18.1",
     "pg": "^8.2.1",
     "react": "^16.3.1",

@@ -23,7 +23,6 @@ const useStyles = makeStyles({
 
 
 export default function List({list, companies}) {
-  console.log(companies)
   var company = companies[0]
   const classes = useStyles();
   return (

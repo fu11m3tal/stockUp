@@ -1,13 +1,18 @@
 import React, { useEffect } from 'react';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import axios from 'axios';
 import Search from './Search.jsx';
 import NewsCard from './NewsCard.jsx';
 import List from './List.jsx';
-
+import Navigation from './Navigation.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      page: "dashboard",
       data: 0,
       companies: ["AAPL", "GOOGL", "TSLA", "AMZN"],
       favorites: [],
@@ -24,6 +29,7 @@ class App extends React.Component {
     this.add_to_favorites = this.add_to_favorites.bind(this);
     this.get_news = this.get_news.bind(this);
     this.get_price_target = this.get_price_target.bind(this);
+    this.handleMenuChange = this.handleMenuChange.bind(this);
   }
 
   add_to_favorites() {
@@ -72,7 +78,6 @@ class App extends React.Component {
       */
       var set = JSON.parse(data).data[0];
       var {list} = this.state;
-      console.log(set)
       if(!list.hasOwnProperty(set.s)) list[set.s] = {symbol: set.s, price: null};
       list[set.s].price = set.p;
       this.setState({list})
@@ -86,24 +91,35 @@ class App extends React.Component {
     this.get_price_target("AAPL")
   }
 
+  handleMenuChange(e, cb) {
+    var page = e.target.id;
+    this.setState({page})
+    cb();
+  }
+
   render() { 
-    var { news, companies, list } = this.state;
-
-// Unsubscribe
- var unsubscribe = function(symbol) {
-    socket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}))
-}
-
-    return (
-      <div>
-        <h1>{this.state.title}</h1>
-        <button onClick={() => {console.log(this.state)}}>State</button>
-        <List companies={companies} list={Object.values(list)}/>
-        {/* {news.map((news, index) => (
-          <NewsCard key={index} news={news} />
-        ))} */}
-      </div>
-    )
+    var { page, news, companies, list } = this.state;
+    if(page === "dashboard") {
+      return (
+        <div>
+          <Navigation handleMenuChange={this.handleMenuChange}/>
+          <h1>Dashboard</h1>
+          <button onClick={() => {console.log(this.state)}}>State</button>
+          <List companies={companies} list={Object.values(list)}/>
+          {/* {news.map((news, index) => (
+            <NewsCard key={index} news={news} />
+          ))} */}
+        </div>
+      )
+    } else if(page === "settings") {
+      return (
+        <div>
+          <Navigation handleMenuChange={this.handleMenuChange}/>
+          <h1>Settings</h1>
+        </div>
+      )
+    }
+    
   }
 }
 
