@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CompanyCard({company, add_company_to_favorites}) {
+export default function CompanyCard({company}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   var { country, currency, exchange, finnhubIndustry, ipo, logo, marketCapitalization, name, phone, shareOutstanding, ticker, weburl } = company;

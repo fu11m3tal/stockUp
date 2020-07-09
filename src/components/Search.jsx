@@ -1,6 +1,10 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import CompanyCard from './CompanyCard.jsx';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+
 
 class Search extends React.Component {
   constructor(props) {
@@ -61,16 +65,42 @@ class Search extends React.Component {
     this.handle_search_input_reset();
   }
 
-  componentDidMount() {
-  }
-
   render() { 
+    const useStyles = makeStyles((theme) => ({
+      root: {
+        '& > *': {
+          margin: theme.spacing(1),
+        },
+      },
+      search: {
+        '& > *': {
+          margin: theme.spacing(1),
+          width: '25ch',
+        },
+      },
+    }));
+    // const classes = useStyles();
     return (
       <div>
-        <input id="search_input" value={this.state.search_input} onChange={this.handle_search_input_change}></input>
-        <button id="search_button" onClick={this.handle_search_button_click}>Search</button>
+        <TextField 
+          id="search_input" 
+          label="Filled" 
+          variant="filled" 
+          value={this.state.search_input} 
+          onChange={this.handle_search_input_change}
+        />
+        <Button 
+          id="search_button" 
+          variant="contained" 
+          color="primary" 
+          onClick={this.handle_search_button_click}
+        >
+          Search
+        </Button>
         {Object.values(this.state.results).map(company => (
-          <CompanyCard company={company} />
+          <CompanyCard 
+            company={company} 
+          />
         ))}
       </div>
     )

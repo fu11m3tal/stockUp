@@ -22,6 +22,7 @@ const useStyles = makeStyles({
 });
 
 
+
 export default function List({list, companies}) {
   var company = companies[0]
   const classes = useStyles();
@@ -39,7 +40,10 @@ export default function List({list, companies}) {
           <TableBody>
             {list.map((company) => (
               <TableRow key={company.symbol}>
-                <TableCell component="th" scope="row">
+                <TableCell 
+                  component="th" 
+                  scope="row"
+                >
                   {company.symbol}
                 </TableCell>
                 <TableCell align="right">{company.price}</TableCell>

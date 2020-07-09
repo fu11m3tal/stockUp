@@ -8,6 +8,7 @@ import Search from './Search.jsx';
 import NewsCard from './NewsCard.jsx';
 import List from './List.jsx';
 import Navigation from './Navigation.jsx';
+import TransitionsModal from './Modal.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -90,7 +91,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.get_price_target("AAPL")
-    this.get_news()
+    this.get_news();
   }
 
   handleMenuChange(e, cb) {
@@ -105,6 +106,7 @@ class App extends React.Component {
       return (
         <div>
           <Navigation handleMenuChange={this.handleMenuChange}/>
+          {/* <TransitionsModal/> */}
           <h1>Stocks</h1>
           <button onClick={() => {console.log(this.state)}}>State</button>
           <List companies={companies} list={Object.values(list)}/>
@@ -116,7 +118,9 @@ class App extends React.Component {
     } else if(page === "search") {
       return (
         <div>
-          <Navigation handleMenuChange={this.handleMenuChange}/>
+          <Navigation 
+            handleMenuChange={this.handleMenuChange}
+          />
           <h1>Search</h1>
           <Search />
         </div>
@@ -124,7 +128,9 @@ class App extends React.Component {
     } else if(page === "news") {
       return (
         <div>
-          <Navigation handleMenuChange={this.handleMenuChange}/>
+          <Navigation 
+            handleMenuChange={this.handleMenuChange}
+          />
           <h1>News</h1>
           {news.map((news, index) => (
             <NewsCard key={index} news={news} />
@@ -134,8 +140,20 @@ class App extends React.Component {
     } else if(page === "settings") {
       return (
         <div>
-          <Navigation handleMenuChange={this.handleMenuChange}/>
+          <Navigation 
+            handleMenuChange={this.handleMenuChange}
+          />
           <h1>Settings</h1>
+        </div>
+      )
+    } else if(page === "card") {
+      return (
+        <div>
+          <Navigation 
+            handleMenuChange={this.handleMenuChange}
+          />
+          <h1>Card</h1>
+          <TransitionsModal visible={true}/>
         </div>
       )
     }

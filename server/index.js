@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
-const TOKEN = "brt2jjnrh5rd6rsr6mag"
 const axios = require('axios');
 // const db = require('../database/index');
 const controllers = require('../database/controllers.js')
