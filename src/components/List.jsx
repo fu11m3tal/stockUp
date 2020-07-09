@@ -17,7 +17,7 @@ const darkTheme = createMuiTheme({
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 650,
+    width: "100%",
   },
 });
 
