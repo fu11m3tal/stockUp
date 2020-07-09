@@ -9,11 +9,11 @@ var WebSocket = require('websocket');
 
 exports.companyNews = (req, res) => {
   //Company News
-  finnhubClient.companyNews("AAPL", "2020-01-01", "2020-05-01", (error, data, response) => {
+  finnhubClient.companyNews("AAPL", "2020-07-09", "2020-07-09", (error, data, response) => {
       if (error) {
-          res.send(error);
+        res.send(error);
       } else {
-          res.send(data)
+        res.send(data)
       }
   });  
 }

@@ -7,5 +7,3 @@
 ### Requirements
 
 ### Extra
-
-### Submission

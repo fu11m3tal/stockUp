@@ -12,7 +12,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: "dashboard",
+      page: "stocks",
       data: 0,
       companies: ["AAPL", "GOOGL", "TSLA", "AMZN"],
       favorites: [],
@@ -76,9 +76,10 @@ class App extends React.Component {
           v: 25,
         }
       */
-      var set = JSON.parse(data).data[0];
+      var set = JSON.parse(data).data;
+      if(set) set = set[0]
       var {list} = this.state;
-      if(!list.hasOwnProperty(set.s)) list[set.s] = {symbol: set.s, price: null};
+      if(!list.hasOwnProperty(set.s)) list[set.s] = {symbol: set.s, price: set.p};
       list[set.s].price = set.p;
       this.setState({list})
     });
@@ -89,6 +90,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.get_price_target("AAPL")
+    this.get_news()
   }
 
   handleMenuChange(e, cb) {
@@ -99,16 +101,34 @@ class App extends React.Component {
 
   render() { 
     var { page, news, companies, list } = this.state;
-    if(page === "dashboard") {
+    if(page === "stocks") {
       return (
         <div>
           <Navigation handleMenuChange={this.handleMenuChange}/>
-          <h1>Dashboard</h1>
+          <h1>Stocks</h1>
           <button onClick={() => {console.log(this.state)}}>State</button>
           <List companies={companies} list={Object.values(list)}/>
           {/* {news.map((news, index) => (
             <NewsCard key={index} news={news} />
           ))} */}
+        </div>
+      )
+    } else if(page === "search") {
+      return (
+        <div>
+          <Navigation handleMenuChange={this.handleMenuChange}/>
+          <h1>Search</h1>
+          <Search />
+        </div>
+      )
+    } else if(page === "news") {
+      return (
+        <div>
+          <Navigation handleMenuChange={this.handleMenuChange}/>
+          <h1>News</h1>
+          {news.map((news, index) => (
+            <NewsCard key={index} news={news} />
+          ))}
         </div>
       )
     } else if(page === "settings") {
@@ -119,7 +139,6 @@ class App extends React.Component {
         </div>
       )
     }
-    
   }
 }
 

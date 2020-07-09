@@ -13,12 +13,15 @@ export default function Navigation({handleMenuChange}) {
             Menu
           </Button>
           <Menu {...bindMenu(popupState)}>
-                  <MenuItem id="dashboard" onClick={(e) => {
+                  <MenuItem id="stocks" onClick={(e) => {
                     handleMenuChange(e, popupState.close);
-                  }}>Dashboard</MenuItem>
+                  }}>Stocks</MenuItem>
                   <MenuItem id="search" onClick={(e) => {
                     handleMenuChange(e, popupState.close);
                   }}>Search</MenuItem>
+                  <MenuItem id="news" onClick={(e) => {
+                    handleMenuChange(e, popupState.close);
+                  }}>News</MenuItem>
                   <MenuItem id="settings" onClick={(e) => {
                     handleMenuChange(e, popupState.close);
                   }}>Settings</MenuItem>
